@@ -46,12 +46,36 @@ public class ClothController : MonoBehaviour
         foreach ( Transform child in transform)
         {
             var v1 = child.GetComponent<Vertex>();
+            
             if (!v1.constrained)
             {
                 HandleCollision(v1);
                 v1.updateTransformPos();
             }
         }
+    }
+    public List<Transform> handleGrab(SphereCollider collider)
+    {
+        List<Transform> ret = new List<Transform>();
+        foreach(Transform child in transform)
+        {
+            var v1 = child.GetComponent<Vertex>();
+            var hits = Physics.OverlapSphere(transform.TransformPoint(v1.pos), 0f);
+            //Handle collision
+            if (hits.Length > 0)
+            {
+                foreach (var hitObject in hits)
+                {
+                    if (hitObject == collider)
+                    {
+                        v1.constrained = true;
+                        ret.Add(child);
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
     }
     void CreateCloth()
     {
@@ -144,7 +168,10 @@ public class ClothController : MonoBehaviour
         {
             foreach (var hitObject in hits)
             {
-
+                if (hitObject.CompareTag("Controller"))
+                {
+                    continue;
+                }
                 if (hitObject.transform != transform)
                 {
 
