@@ -12,7 +12,6 @@ public class RopeController : MonoBehaviour
     public Vector3 g;
     public float r;
     int i = 0;
-    Transform selectedObj;
     float t = 0;
     float dt;
     // Start is called before the first frame update
@@ -28,26 +27,8 @@ public class RopeController : MonoBehaviour
             obj.transform.localPosition = g.normalized *constraintLength*i ;
         }
     }
-    bool HandleRaycast(Ray ray)
-    {
-        RaycastHit hit;
-        if(GetComponent<MeshCollider>().Raycast(ray,out hit, 100f))
-        {
-            var pos = hit.point;
-            var min = (transform.GetChild(0).position - pos).magnitude;
-            selectedObj= transform.GetChild(0);
-            foreach(Transform child in transform)
-            {
-                if ((child.position - pos).magnitude< min){
-                    selectedObj = child;
-                }
-            }
-            selectedObj.GetComponent<Vertex>().constrained=true;
-            return true;
-        }
-        return false;
-
-    }
+    
+    
     // Update is called once per frame
     void Update()
     {
