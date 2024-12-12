@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Vertex : MonoBehaviour
 {
-    public Vertex connectedVertex;
     public bool constrained = false;
     public Vector3 pos ; 
     public Vector3 prevpos;
     public float radius;
     public Vector3 force = Vector3.zero;
     public float mass;
+    public int ind;
     // Start is called before the first frame update
     void Start()
     {
